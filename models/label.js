@@ -1,4 +1,4 @@
-const mongoose = require('mongoode')
+const mongoose = require('mongoose')
 
 const labelSchema = new mongoose.Schema({
   name: String

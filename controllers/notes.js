@@ -37,22 +37,19 @@ notesRouter.delete('/:id', async (request, response) => {
 notesRouter.patch('/:id', async (request, response) => {
   const body = request.body
 
-  // const note = {
-  //   title: body.title,
-  //   details: body.details,
-  //   pinned: body.pinned,
-  //   labels: body.labels
-  // }
-
-  const note = new Note({
+  const note = {
     title: body.title,
     details: body.details,
     pinned: body.pinned,
     labels: body.labels
-  })
+  }
 
   Note.findByIdAndUpdate(request.params.id, note, { new: true })
     .then(updatedNote => {
+      if (!updatedNote) {
+        // Note not found
+        return response.status(404).json({ error: 'Note not found' })
+      }
       response.json(updatedNote)
     })
 })

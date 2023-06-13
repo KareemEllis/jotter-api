@@ -3,7 +3,8 @@ const express = require('express')
 require('express-async-errors')
 const app = express()
 const cors = require('cors')
-//Routers heree
+const notesRouter = require('./controllers/notes')
+const labelsRouter = require('./controllers/labels')
 const middleware = require('./utils/middleware')
 const logger = require('./utils/logger')
 const mongoose = require('mongoose')
@@ -25,10 +26,10 @@ app.use(express.static('build'))
 app.use(express.json())
 app.use(middleware.requestLogger)
 
-//app.use('/api/notes', notesRouter)
-//app.use('/api/labels')
+app.use('/api/notes', notesRouter)
+app.use('/api/labels', labelsRouter)
 
 app.use(middleware.unknownEndpoint)
-app.use(middleware.error)
+app.use(middleware.errorHandler)
 
 module.exports = app
