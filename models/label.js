@@ -1,7 +1,15 @@
 const mongoose = require('mongoose')
 
 const labelSchema = new mongoose.Schema({
-  name: String
+  name: {
+    type: String,
+    required: true
+  },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: 'User'
+  }
 })
 
 labelSchema.set('toJSON', {

@@ -13,13 +13,21 @@ const unknownEndpoint = (request, response) => {
 }
 
 const errorHandler = (error, request, response, next) => {
+  logger.error(error.name)
   logger.error(error.message)
 
-  //if (error.name === 'CastError') {
-  //return response.status(400).send({ error: 'malformatted id' })
-  //} else if (error.name === 'ValidationError') {
-  //return response.status(400).json({ error: error.message })
-  //}
+  if (error.name === 'CastError') {
+    return response.status(400).send({ error: 'malformatted id' })
+  }
+  else if (error.name === 'ValidationError') {
+    if (error.message.includes('expected `username` to be unique')) {
+      return response.status(400).json({ error: 'username not unique' })
+    }
+    return response.status(400).json({ error: error.message })
+  }
+  else if (error.name ===  'JsonWebTokenError') {
+    return response.status(400).json({ error: error.message })
+  }
 
   next(error)
 }

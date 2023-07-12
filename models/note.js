@@ -1,10 +1,28 @@
 const mongoose = require('mongoose')
 
 const noteSchema = new mongoose.Schema({
-  title: String,
-  details: String,
-  pinned: Boolean,
-  labels: Array
+  title: {
+    type: String,
+    default: ''
+  },
+  details: {
+    type: String,
+    default: ''
+  },
+  pinned: {
+    type: Boolean,
+    default: false
+  },
+  labels: Array,
+  backgroundColor: {
+    type: String,
+    default: '#ffffff'
+  },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: 'User'
+  }
 })
 
 noteSchema.set('toJSON', {
