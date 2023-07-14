@@ -1,13 +1,14 @@
 {
   "files": {
     "main.css": "/static/css/main.d9ae01cd.css",
-    "main.js": "/static/js/main.f83ef213.js",
+    "main.js": "/static/js/main.03853a30.js",
+    "static/media/jotter-logo.png": "/static/media/jotter-logo.c290d02c8195a41d1311.png",
     "index.html": "/index.html",
     "main.d9ae01cd.css.map": "/static/css/main.d9ae01cd.css.map",
-    "main.f83ef213.js.map": "/static/js/main.f83ef213.js.map"
+    "main.03853a30.js.map": "/static/js/main.03853a30.js.map"
   },
   "entrypoints": [
     "static/css/main.d9ae01cd.css",
-    "static/js/main.f83ef213.js"
+    "static/js/main.03853a30.js"
   ]
 }
