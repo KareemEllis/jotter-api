@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt')
 const usersRouter = require('express').Router()
 const User = require('../models/user')
 const Note = require('../models/note')
+const Label = require('../models/label')
 
 usersRouter.post('/', async (request, response) => {
   const { username, name, password } = request.body
@@ -21,11 +22,17 @@ usersRouter.post('/', async (request, response) => {
 
   const savedUser = await user.save()
 
+  const starterLabel = new Label({
+    name: 'My label',
+    user: savedUser._id
+  })
+  const savedLabel = await starterLabel.save()
+
   const starterNote = new Note({
     title: 'Welcome!',
     details: 'Thank you for using jotter.',
     pinned: true,
-    labels: [],
+    labels: [savedLabel._id],
     backgroundColor: '#FFFFFF',
     user: savedUser._id
   })
