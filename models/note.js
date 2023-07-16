@@ -18,6 +18,10 @@ const noteSchema = new mongoose.Schema({
     type: String,
     default: '#ffffff'
   },
+  photoFilename: {
+    type: String,
+    default: null
+  },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,

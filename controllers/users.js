@@ -34,6 +34,7 @@ usersRouter.post('/', async (request, response) => {
     pinned: true,
     labels: [savedLabel._id],
     backgroundColor: '#FFFFFF',
+    photoFilename: null,
     user: savedUser._id
   })
 
