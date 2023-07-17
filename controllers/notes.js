@@ -7,10 +7,12 @@ const path = require('path')
 const jwt = require('jsonwebtoken')
 const multer = require('multer')
 
+const uploadDestination = path.join(__dirname, '..', 'uploads')
+
 // Configure multer
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, './uploads') // Set the destination folder where files will be saved
+    cb(null, uploadDestination) // Set the destination folder where files will be saved
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9)
