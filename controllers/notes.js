@@ -65,11 +65,12 @@ notesRouter.post('/', upload.single('photo') ,async (request, response) => {
     title: body.title,
     details: body.details,
     pinned: body.pinned,
-    labels: body.labels !== '' ? body.labels.split(',') : [],
+    labels: (body.labels) ? body.labels : [],
     backgroundColor: body.backgroundColor,
     photoFilename: request.file ? request.file.filename : null,
     user: user._id
   })
+
 
   const savedNote = await note.save()
   response.status(201).json(savedNote)
@@ -125,6 +126,7 @@ notesRouter.delete('/:id/photo', async (request, response) => {
 // Update Note
 notesRouter.patch('/:id', upload.single('photo'), async (request, response) => {
   const body = request.body
+  console.log(body)
 
   const decodedToken = jwt.verify(getTokenFrom(request), process.env.SECRET)
   if (!decodedToken.id) {
@@ -140,17 +142,19 @@ notesRouter.patch('/:id', upload.single('photo'), async (request, response) => {
     title: body.title,
     details: body.details,
     pinned: body.pinned,
-    labels: body.labels,
+    labels: (body.labels) ? body.labels : [],
     backgroundColor: body.backgroundColor,
     user: decodedToken.id
   }
 
-  console.log(body)
+  console.log('Request File:')
   console.log(request.file)
+  console.log('Remove Photo?')
   console.log(isRemovePhoto)
 
   if (request.file) {
     if (prevNote.photoFilename) {
+      console.log('Removing (1)')
       // Delete previous photo if exists
       const previousPhotoPath = path.join(__dirname, '..', 'uploads', prevNote.photoFilename)
       fs.unlink(previousPhotoPath, (err) => {
@@ -161,8 +165,9 @@ notesRouter.patch('/:id', upload.single('photo'), async (request, response) => {
     }
     note.photoFilename = request.file.filename
   }
-  else if (isRemovePhoto) {
+  else if (isRemovePhoto === 'true') {
     if (prevNote.photoFilename) {
+      console.log('Removing (2)')
       // Delete previous photo if exists
       const previousPhotoPath = path.join(__dirname, '..', 'uploads', prevNote.photoFilename)
       fs.unlink(previousPhotoPath, (err) => {
